@@ -34,7 +34,7 @@
     </description>
 
     <scm>
-        <connection>https://github.com/PDavidson123/3x3ChessGame</connection>
+        <connection>scm:https://github.com/PDavidson123/3x3ChessGame.git</connection>
     </scm>
 
     <dependencies>
@@ -54,11 +54,11 @@
             <version>${slf4j.version}</version>
             <scope>compile</scope>
         </dependency>
-        <!--<dependency>
-            <groupId>org.codeartisans.javafx</groupId>
-            <artifactId>javafx-maven-plugin</artifactId>
-            <version>1.2</version>
-        </dependency>-->
+        <dependency>
+            <groupId>org.apache.maven.doxia</groupId>
+            <artifactId>doxia-site-renderer</artifactId>
+            <version>1.4</version>
+        </dependency>
     </dependencies>
 
     <profiles>
@@ -128,6 +128,7 @@
                     <version>1.18.6</version>
                     <scope>compile</scope>
                 </dependency>
+
             </dependencies>
         </profile>
         <profile>
@@ -149,6 +150,15 @@
     <build>
         <plugins>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>3.7.1</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+                <version>3.0.0</version>
+            </plugin><plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-site-plugin</artifactId>
                 <version>3.7.1</version>
@@ -199,16 +209,6 @@
                     </execution>
                 </executions>
             </plugin>
-            <!--
-            <plugin>
-                <groupId>org.openjfx</groupId>
-                <artifactId>javafx-maven-plugin</artifactId>
-                <version>0.0.2</version>
-                <configuration>
-                    <mainClass>game.MainApp</mainClass>
-                </configuration>
-            </plugin>
-            -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
@@ -266,5 +266,43 @@
             </snapshots>
         </repository>
     </repositories>
+
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.1.0</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>3.0.0</version>
+                <configuration>
+                    <configLocation>checkstyle.xml</configLocation>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jxr-plugin</artifactId>
+                <version>3.0.0</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-report-plugin</artifactId>
+                <version>3.0.0-M3</version>
+            </plugin>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.2</version>
+            </plugin>
+            <plugin>
+                <groupId>org.openclover</groupId>
+                <artifactId>clover-maven-plugin</artifactId>
+                <version>4.3.1</version>
+            </plugin>
+        </plugins>
+    </reporting>
 
 </project>

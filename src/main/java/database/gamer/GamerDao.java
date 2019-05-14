@@ -3,7 +3,7 @@ package database.gamer;
 import database.jpa.GenericJpaDao;
 
 /**
- * DAO class for the {@link Gamer} entity.
+ * DAO osztály a {@link Gamer} entitásnak.
  */
 public class GamerDao extends GenericJpaDao<Gamer> {
 

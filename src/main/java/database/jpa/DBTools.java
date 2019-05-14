@@ -49,6 +49,10 @@ public class DBTools {
         gmd.update(tmp);
     }
 
+    /**
+     *
+     * @return
+     */
     public List<Gamer> getLeaderboard() {
         return gmd.findAll().stream().sorted(Comparator.comparingInt(Gamer::getScore).reversed()).collect(Collectors.toList());
     }

@@ -60,7 +60,7 @@
                </children>
             </GridPane>
             <Label fx:id="nameLabel" layoutX="236.0" layoutY="40.0" prefHeight="25.0" prefWidth="138.0" textAlignment="CENTER" />
-            <Label fx:id="messageout" layoutX="195.0" layoutY="293.0" prefHeight="17.0" prefWidth="200.0" />
+            <Label fx:id="messageout" alignment="CENTER" layoutX="195.0" layoutY="293.0" prefHeight="17.0" prefWidth="200.0" />
             <Label fx:id="stepLabel" layoutX="418.0" layoutY="180.0" prefHeight="17.0" prefWidth="69.0" />
             <Button fx:id="winButton" layoutX="185.0" layoutY="347.0" mnemonicParsing="false" onAction="#winButtonClick" prefHeight="26.0" prefWidth="221.0" text="Vissza a kezdő képernyőre" />
          </children>
