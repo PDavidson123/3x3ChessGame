@@ -10,23 +10,28 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane id="AnchorPane" prefHeight="602.0" prefWidth="610.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.FXMLController">
     <children>
-      <AnchorPane fx:id="leaderboardPane" prefHeight="602.0" prefWidth="610.0" visible="false">
+      <AnchorPane fx:id="leaderboardPane" layoutY="-6.0" prefHeight="602.0" prefWidth="610.0" visible="false">
          <children>
             <TableView fx:id="leaderboard" layoutX="140.0" layoutY="14.0" prefHeight="298.0" prefWidth="331.0">
               <columns>
-                <TableColumn fx:id="name" prefWidth="163.0" text="Név" />
-                <TableColumn fx:id="winscore" editable="false" prefWidth="166.0" sortType="DESCENDING" text="Nyerések száma" />
+                  <TableColumn fx:id="id" prefWidth="39.0" text="ID" />
+                <TableColumn fx:id="name" prefWidth="140.0" text="Név" />
+                <TableColumn fx:id="winscore" editable="false" prefWidth="151.0" sortType="DESCENDING" text="Nyerések száma" />
               </columns>
             </TableView>
+            <Button fx:id="leadBackButton" layoutX="244.0" layoutY="330.0" mnemonicParsing="false" onAction="#leadBackButtonClick" prefHeight="26.0" prefWidth="123.0" text="Vissza" />
          </children></AnchorPane>
       <AnchorPane fx:id="preppane" prefHeight="602.0" prefWidth="610.0" visible="false">
          <children>
-            <Label layoutX="236.0" layoutY="70.0" prefHeight="17.0" prefWidth="138.0" text="Játékos neve:" textAlignment="CENTER" />
-            <TextField fx:id="gamer1" alignment="CENTER" layoutX="231.0" layoutY="87.0" />
-            <Button fx:id="B_gamebegin" layoutX="231.0" layoutY="193.0" mnemonicParsing="false" onAction="#B_gamebeginClick" prefHeight="25.0" prefWidth="149.0" text="Játék kezdése" />
+            <Label alignment="CENTER" layoutX="248.0" layoutY="70.0" prefHeight="17.0" prefWidth="138.0" text="Játékos neve:" textAlignment="CENTER" />
+            <TextField fx:id="gamer1" alignment="CENTER" layoutX="232.0" layoutY="95.0" />
+            <Button fx:id="B_gamebegin" layoutX="243.0" layoutY="190.0" mnemonicParsing="false" onAction="#B_gamebeginClick" prefHeight="25.0" prefWidth="149.0" text="Játék kezdése" />
          </children>
       </AnchorPane>
       <AnchorPane fx:id="gamepane" prefHeight="602.0" prefWidth="610.0" visible="false">
@@ -60,10 +65,23 @@
             <Button fx:id="winButton" layoutX="185.0" layoutY="347.0" mnemonicParsing="false" onAction="#winButtonClick" prefHeight="26.0" prefWidth="221.0" text="Vissza a kezdő képernyőre" />
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="start" prefHeight="602.0" prefWidth="610.0">
+      <AnchorPane fx:id="start" prefHeight="602.0" prefWidth="610.0" visible="false">
          <children>
             <Button fx:id="B_start" layoutX="244.0" layoutY="158.0" mnemonicParsing="false" onAction="#B_startClick" prefHeight="25.0" prefWidth="123.0" text="Start" />
             <Button fx:id="leadbButton" layoutX="244.0" layoutY="202.0" mnemonicParsing="false" onAction="#leadbShow" prefHeight="26.0" prefWidth="123.0" text="Ranglista" />
+            <Label alignment="CENTER" layoutX="127.0" layoutY="66.0" prefHeight="47.0" prefWidth="358.0" text="3x3ChessGame" textAlignment="CENTER">
+               <textFill>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop color="#ff0000af" />
+                        <Stop color="#ff00005e" offset="1.0" />
+                     </stops>
+                  </LinearGradient>
+               </textFill>
+               <font>
+                  <Font name="System Bold" size="39.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
     </children>

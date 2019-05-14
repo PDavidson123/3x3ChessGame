@@ -50,6 +50,8 @@ public class FXMLController {
     @FXML
     private Button leadbButton;
     @FXML
+    private Button leadBackButton;
+    @FXML
     private AnchorPane start;
     @FXML
     private AnchorPane gamepane;
@@ -67,6 +69,12 @@ public class FXMLController {
     private Label stepLabel;
     @FXML
     private TableView leaderboard;
+    @FXML
+    private TableColumn<Gamer, String> id;
+    @FXML
+    private TableColumn<Gamer, String> name;
+    @FXML
+    private TableColumn<Gamer, String> winscore;
 
 
     public static ImageView[][] btns = new ImageView[3][3];
@@ -114,11 +122,20 @@ public class FXMLController {
     }
     @FXML
     private void leadbShow(ActionEvent event) {
-        /*ObservableList<Gamer> top = FXCollections.observableList(conn.getleaderboard());
+        start.setVisible(false);
+        leaderboardPane.setVisible(true);
 
+        ObservableList<Gamer> top = FXCollections.observableList(conn.getLeaderboard());
+
+        id.setCellValueFactory(new PropertyValueFactory<>("id"));
         name.setCellValueFactory(new PropertyValueFactory<>("name"));
         winscore.setCellValueFactory(new PropertyValueFactory<>("score"));
-        leaderboard.setItems(top);*/
+        leaderboard.setItems(top);
+    }
+    @FXML
+    private void leadBackButtonClick(ActionEvent event) {
+        leaderboardPane.setVisible(false);
+        start.setVisible(true);
     }
 
     @FXML
@@ -144,6 +161,7 @@ public class FXMLController {
         start.setVisible(true);
         gamepane.setVisible(false);
         preppane.setVisible(false);
+        leaderboardPane.setVisible(false);
 
         /*for(int i=0; i<3; i++){
             for (int j=0; j<3; j++){
