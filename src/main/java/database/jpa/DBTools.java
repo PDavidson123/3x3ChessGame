@@ -19,8 +19,8 @@ public class DBTools {
     }
 
     /**
-     * Inserts a row with the data of the player into the database, if it is not present yet.
-     * @param gamer a {@link Gamer} object, which provides data of the player.
+     * Beszúr egy sort a játékos adataival az adatbázisba, ha az még nincs jelen.
+     * @param gamer egy {@link Gamer} objektum, ami a játékos adatait szolgáltatja.
      */
     public void addGamer(Gamer gamer) {
         Gamer tmp = null;
@@ -34,8 +34,8 @@ public class DBTools {
             gmd.persist(gamer);
     }
     /**
-     * Updates the row in the database, which contains the data of player {@code gamer}.
-     * @param gamer a {@link Gamer} object, which provides data of the player.
+     * Frissít egy sort az adatbázisban, ami a megadott játékos adatait tartalmazza.
+     * @param gamer egy {@link Gamer} objektum, ami a játékos adatait szolgáltatja.
      */
     public void updateGamer(Gamer gamer) {
         Gamer tmp = null;

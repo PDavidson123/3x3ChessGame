@@ -32,9 +32,9 @@ public class FXMLController {
     @FXML
     private ImageView b02;
     @FXML
-    private  ImageView b10;
+    private ImageView b10;
     @FXML
-    private  ImageView b11;
+    private ImageView b11;
     @FXML
     private ImageView b12;
     @FXML
@@ -68,9 +68,10 @@ public class FXMLController {
     @FXML
     private TableColumn<Gamer, String> winscore;
 
+    private static FXMLController instance;
 
     public static ImageView[][] btns = new ImageView[3][3];
-    private static byte[][] ground = new byte[3][3];
+    public static byte[][] ground = new byte[3][3];
     private static String player1;
     private static Image blackblack;
     private static Image whiteblack;
@@ -78,11 +79,9 @@ public class FXMLController {
     private static Image blackwhite;
     private static Image black;
     private static Image white;
+    private Play play = new Play();
 
-    private boolean IsFirstClick = true;
-    private boolean ColorSelection = true;
-    private int[] FirstClickNumber = new int[2];
-    private int StepCounter=0;
+    public static int StepCounter=0;
 
     private static Logger logger = LoggerFactory.getLogger(FXMLController.class);
 
@@ -133,25 +132,27 @@ public class FXMLController {
     }
 
     @FXML
-    private void b00Click() { step(0,0); }
+    private void b00Click() { setMessageOutText(play.step(0,0)); }
     @FXML
-    private void b01Click() { step(0,1); }
+    private void b01Click() { setMessageOutText(play.step(0,1)); }
     @FXML
-    private void b02Click() { step(0,2); }
+    private void b02Click() { setMessageOutText(play.step(0,2)); }
     @FXML
-    private void b10Click() { step(1,0); }
+    private void b10Click() { setMessageOutText(play.step(1,0)); }
     @FXML
-    private void b11Click() { step(1,1); }
+    private void b11Click() { setMessageOutText(play.step(1,1)); }
     @FXML
-    private void b12Click() { step(1,2); }
+    private void b12Click() { setMessageOutText(play.step(1,2)); }
     @FXML
-    private void b20Click() { step(2,0); }
+    private void b20Click() { setMessageOutText(play.step(2,0)); }
     @FXML
-    private void b21Click() { step(2,1); }
+    private void b21Click() { setMessageOutText(play.step(2,1)); }
     @FXML
-    private void b22Click() { step(2,2); }
+    private void b22Click() { setMessageOutText(play.step(2,2)); }
 
     public void initialize() {
+
+        FXMLController.instance=this;
 
         logger.info("Játék elindítva.");
 
@@ -189,7 +190,15 @@ public class FXMLController {
         nameLabel.setText(player1);
     }
 
-    private void resetGame()
+    public static FXMLController getInstance()
+    {
+        return  instance;
+    }
+
+    /**
+     * Játék alapértékeinek beállítása.
+     */
+    public void resetGame()
     {
         for(byte i=0;i<3;i++)
             ground[0][i] = 1;
@@ -200,11 +209,14 @@ public class FXMLController {
 
         winButton.setVisible(false);
         StepCounter = 0;
-        IsFirstClick = true;
+        play.IsFirstClick = true;
         paint();
     }
 
-    private static void paint()
+    /**
+     * A btns ImageView tömböt szinezi ki a ground[][] tömb alapján.
+     */
+    public static void paint()
     {
         for(int i=0;i<3;i++)
             for(int j=0;j<3;j++)
@@ -239,105 +251,13 @@ public class FXMLController {
             }
     }
 
-    public void step(int a,int b)
+    public void setMessageOutText(String Text)
     {
-        if(IsFirstClick)
-        {
-            if(ground[a][b] == 0)
-            {
-                messageout.setText("Rossz választás.");
-                logger.warn("A semmivel nem lehet lépni.");
-            }
-            else
-            {
-                if(ColorSelection && ground[a][b]==2 || !ColorSelection && ground[a][b]==1)
-                {
-                    messageout.setText("Rossz színt választottál.");
-                    logger.warn("Rossz szín választva.");
-                }
-                else if(ColorSelection && ground[a][b]==1 || !ColorSelection && ground[a][b]==2)
-                {
-                    FirstClickNumber[0] = a;
-                    FirstClickNumber[1] = b;
-                    IsFirstClick = false;
-                    messageout.setText("Kiválasztva.");
-                    logger.info(FirstClickNumber[0] + "," + FirstClickNumber[1] + " kiválasztva.");
-                }
-            }
-        }
-        else
-        {
-            if (a==FirstClickNumber[0] && b==FirstClickNumber[1])
-            {
-                messageout.setText("Ugyan oda nem léphetsz.");
-                logger.warn("Ugyan oda nem léphet.");
-            }
-
-            else
-            {
-                if(ground[a][b]==0 && ground[FirstClickNumber[0]][FirstClickNumber[1]]==1 && ColorSelection)
-                {
-                    if(FirstClickNumber[0]<a)
-                    {
-                        if(ground[a][b]==0)
-                        {
-                            ground[FirstClickNumber[0]][FirstClickNumber[1]] =0;
-                            ground[a][b]=1;
-
-                            paint();
-                            IsFirstClick=true;
-                            ColorSelection=false;
-                            logger.info(FirstClickNumber[0] + "," + FirstClickNumber[1] + "-ről " + a + "," + b + "-re lépett.");
-                        }
-                    }
-                    else
-                    {
-                        messageout.setText("Vissza nem léphetsz.");
-                        logger.warn("Vissza nem tud lépni.");
-                    }
-                }
-                else if(ground[a][b]==0 && ground[FirstClickNumber[0]][FirstClickNumber[1]]==2 && !ColorSelection)
-                {
-                    if(FirstClickNumber[0]>a)
-                    {
-                        if(ground[a][b]==0)
-                        {
-                            ground[FirstClickNumber[0]][FirstClickNumber[1]] =0;
-                            ground[a][b]=2;
-
-                            paint();
-                            IsFirstClick=true;
-                            ColorSelection=true;
-                            logger.info(FirstClickNumber[0] + "," + FirstClickNumber[1] + "-ről " + a + "," + b + "-re lépett.");
-                        }
-
-                    }
-                }
-            }
-            StepCounter++;
-            stepLabel.setText(StepCounter + " . lépés");
-            logger.info( StepCounter + ". lépés.");
-            chechwin();
-        }
-    }
-
-    public void chechwin()
-    {
-        int goodness=0;
-        for (int i=0;i<3;i++)
-        {
-            if(ground[0][i]==2)
-                goodness++;
-            if(ground[2][i]==1)
-                goodness++;
-        }
-        logger.info(goodness + " bábu van a helyén.");
-        if(goodness==6)
-            playwin();
+        messageout.setText(Text);
     }
     public void playwin()
     {
-        logger.info(player1 + " megnyerte a játékot " + StepCounter + " lépéssel.");
+        logger.info(FXMLController.player1 + " megnyerte a játékot " + FXMLController.StepCounter + " lépéssel.");
         messageout.setText("Megnyerted a játékot.");
         winButton.setVisible(true);
     }
