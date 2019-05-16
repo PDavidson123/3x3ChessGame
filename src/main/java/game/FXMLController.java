@@ -44,7 +44,7 @@ public class FXMLController {
     @FXML
     private ImageView b22;
     @FXML
-    private AnchorPane start;
+    private AnchorPane startPane;
     @FXML
     private AnchorPane gamePane;
     @FXML
@@ -90,7 +90,7 @@ public class FXMLController {
     @FXML
     private void B_startClick(ActionEvent event) {
         prepPane.setVisible(true);
-        start.setVisible(false);
+        startPane.setVisible(false);
     }
     @FXML
     private void B_gamebeginClick(ActionEvent event) {
@@ -101,14 +101,14 @@ public class FXMLController {
     }
     @FXML
     private void winButtonClick(ActionEvent event) {
-        start.setVisible(true);
+        startPane.setVisible(true);
         gamePane.setVisible(false);
         conn.updateGamer(gamer);
         resetGame();
     }
     @FXML
     private void leadbShow(ActionEvent event) {
-        start.setVisible(false);
+        startPane.setVisible(false);
         leaderboardPane.setVisible(true);
 
         logger.info("Leaderboard lekérése.");
@@ -123,7 +123,7 @@ public class FXMLController {
     @FXML
     private void leadBackButtonClick(ActionEvent event) {
         leaderboardPane.setVisible(false);
-        start.setVisible(true);
+        startPane.setVisible(true);
     }
 
     @FXML
@@ -151,7 +151,7 @@ public class FXMLController {
 
         logger.info("Játék elindítva.");
 
-        start.setVisible(true);
+        startPane.setVisible(true);
         gamePane.setVisible(false);
         prepPane.setVisible(false);
         leaderboardPane.setVisible(false);

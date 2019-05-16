@@ -51,7 +51,7 @@ public class DBTools {
 
     /**
      * A függvény lekéri a játékosokat az adatbázisból, és pontszám alapján csökkenő sorrendbe rendezi.
-     * @return
+     * @return játékosokat, játékosok adatait adja vissza
      */
     public List<Gamer> getLeaderboard() {
         return gmd.findAll().stream().sorted(Comparator.comparingInt(Gamer::getScore).reversed()).collect(Collectors.toList());
