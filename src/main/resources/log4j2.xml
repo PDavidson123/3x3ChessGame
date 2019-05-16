@@ -5,9 +5,6 @@
         </Console>
     </Appenders>
     <Loggers>
-        <logger name="database.jpa.DBTools" additivity="false" >
-            <AppenderRef ref="Console" />
-        </logger>
         <logger level="all" name="game.Play" additivity="false">
             <AppenderRef ref="Console" />
         </logger>

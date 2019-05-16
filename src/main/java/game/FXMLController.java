@@ -46,9 +46,9 @@ public class FXMLController {
     @FXML
     private AnchorPane start;
     @FXML
-    private AnchorPane gamepane;
+    private AnchorPane gamePane;
     @FXML
-    private AnchorPane preppane;
+    private AnchorPane prepPane;
     @FXML
     private AnchorPane leaderboardPane;
     @FXML
@@ -57,8 +57,6 @@ public class FXMLController {
     private Label nameLabel;
     @FXML
     private Label messageout;
-    @FXML
-    private Label stepLabel;
     @FXML
     private TableView leaderboard;
     @FXML
@@ -91,7 +89,7 @@ public class FXMLController {
 
     @FXML
     private void B_startClick(ActionEvent event) {
-        preppane.setVisible(true);
+        prepPane.setVisible(true);
         start.setVisible(false);
     }
     @FXML
@@ -104,7 +102,7 @@ public class FXMLController {
     @FXML
     private void winButtonClick(ActionEvent event) {
         start.setVisible(true);
-        gamepane.setVisible(false);
+        gamePane.setVisible(false);
         conn.updateGamer(gamer);
         resetGame();
     }
@@ -113,7 +111,7 @@ public class FXMLController {
         start.setVisible(false);
         leaderboardPane.setVisible(true);
 
-        logger.error("Leaderboard lekérése.");
+        logger.info("Leaderboard lekérése.");
 
         ObservableList<Gamer> top = FXCollections.observableList(conn.getLeaderboard());
 
@@ -154,8 +152,8 @@ public class FXMLController {
         logger.info("Játék elindítva.");
 
         start.setVisible(true);
-        gamepane.setVisible(false);
-        preppane.setVisible(false);
+        gamePane.setVisible(false);
+        prepPane.setVisible(false);
         leaderboardPane.setVisible(false);
 
         btns[0][0] = b00;
@@ -185,8 +183,8 @@ public class FXMLController {
         player1=gamer1.getText();
         nameLabel.setText(player1);
 
-        preppane.setVisible(false);
-        gamepane.setVisible(true);
+        prepPane.setVisible(false);
+        gamePane.setVisible(true);
 
         gamer.setName(gamer1.getText());
 
@@ -202,7 +200,7 @@ public class FXMLController {
     }
 
     /**
-     * Játék alapértékeinek beállítása.
+     * Játék alapértékeinek beállítása (játéktér tömb feltöltése, lépésszámláló resetelése).
      */
     public void resetGame()
     {
@@ -257,10 +255,17 @@ public class FXMLController {
             }
     }
 
+    /**
+     * Játék közben generált üzeneteket jeleníti meg.
+     * @param Text kiíratni kívánt szöveg
+     */
     public void setMessageOutText(String Text) {
         messageout.setText(Text);
     }
 
+    /**
+     * A játék megnyerése esetén a gamePane-n végbemenő változásokért felelős.
+     */
     public void playwin() {
         logger.info(player1 + " megnyerte a játékot " + StepCounter + " lépéssel.");
         messageout.setText("Megnyerted a játékot.");

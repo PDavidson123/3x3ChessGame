@@ -27,14 +27,14 @@
             </TableView>
             <Button fx:id="leadBackButton" layoutX="244.0" layoutY="330.0" mnemonicParsing="false" onAction="#leadBackButtonClick" prefHeight="26.0" prefWidth="123.0" text="Vissza" />
          </children></AnchorPane>
-      <AnchorPane fx:id="preppane" prefHeight="602.0" prefWidth="610.0" visible="false">
+      <AnchorPane fx:id="prepPane" prefHeight="602.0" prefWidth="610.0" visible="false">
          <children>
             <Label alignment="CENTER" layoutX="248.0" layoutY="70.0" prefHeight="17.0" prefWidth="138.0" text="Játékos neve:" textAlignment="CENTER" />
             <TextField fx:id="gamer1" alignment="CENTER" layoutX="232.0" layoutY="95.0" />
             <Button fx:id="B_gamebegin" layoutX="243.0" layoutY="190.0" mnemonicParsing="false" onAction="#B_gamebeginClick" prefHeight="25.0" prefWidth="149.0" text="Játék kezdése" />
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="gamepane" prefHeight="602.0" prefWidth="610.0" visible="false">
+      <AnchorPane fx:id="gamePane" prefHeight="602.0" prefWidth="610.0" visible="false">
          <children>
             <GridPane layoutX="205.0" layoutY="88.0" prefHeight="200.0" prefWidth="200.0">
               <columnConstraints>
@@ -65,7 +65,7 @@
             <Button fx:id="winButton" layoutX="185.0" layoutY="347.0" mnemonicParsing="false" onAction="#winButtonClick" prefHeight="26.0" prefWidth="221.0" text="Megnyerted a játékot!" />
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="start" prefHeight="602.0" prefWidth="610.0" visible="false">
+      <AnchorPane fx:id="startPane" prefHeight="602.0" prefWidth="610.0" visible="false">
          <children>
             <Button fx:id="B_start" layoutX="244.0" layoutY="158.0" mnemonicParsing="false" onAction="#B_startClick" prefHeight="25.0" prefWidth="123.0" text="Start" />
             <Button fx:id="leadbButton" layoutX="244.0" layoutY="202.0" mnemonicParsing="false" onAction="#leadbShow" prefHeight="26.0" prefWidth="123.0" text="Ranglista" />
