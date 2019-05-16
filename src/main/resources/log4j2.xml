@@ -5,8 +5,14 @@
         </Console>
     </Appenders>
     <Loggers>
-        <logger name="game.FXMLController" >
-            <level value="all"/>
+        <logger name="database.jpa.DBTools" additivity="false" >
+            <AppenderRef ref="Console" />
+        </logger>
+        <logger level="all" name="game.Play" additivity="false">
+            <AppenderRef ref="Console" />
+        </logger>
+        <logger level="all" name="game.FXMLController" additivity="false">
+            <AppenderRef ref="Console" />
         </logger>
     </Loggers>
 </Configuration>

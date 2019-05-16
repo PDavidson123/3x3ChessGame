@@ -1,4 +1,4 @@
 /**
- * Provides classes for managing data of players.
+ * A játékosok adatait kezelő osztályokat tartalmazza.
  */
 package database.gamer;

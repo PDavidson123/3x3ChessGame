@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 public class Play
 {
 
-    private static Logger logger = LoggerFactory.getLogger(FXMLController.class);
+    private static Logger logger = LoggerFactory.getLogger(Play.class);
 
     public static boolean IsFirstClick = true;
     private static boolean ColorSelection = true;
@@ -14,8 +14,8 @@ public class Play
 
     /**
      * A megtenni kívánt lépéseket ellenőrzi, teszi meg.
-     * @param Height
-     * @param Width
+     * @param Height a választott bábu Y koordinátája
+     * @param Width a választott bábu X koordinátája
      */
     public void step(int Height,int Width)
     {
@@ -63,9 +63,9 @@ public class Play
     }
 
     /**
-     * Ledönti, hogy a játékos a jó színt választotta-e.
-     * @param Height
-     * @param Width
+     * Eldönti, hogy a játékos a jó színt választotta-e.
+     * @param Height a választott bábu Y koordinátája
+     * @param Width a választott bábu X koordinátája
      */
     public static void stepColorSelect(int Height,int Width) {
         if(ColorSelection && FXMLController.ground[Height][Width]==2 || !ColorSelection && FXMLController.ground[Height][Width]==1) {
@@ -81,8 +81,8 @@ public class Play
 
     /**
      * Ellenőrzi, hogy bábut választott-e a játékos.
-     * @param Height
-     * @param Width
+     * @param Height a választott mező Y koordinátája
+     * @param Width A választott mező X koordinátája
      */
     public static void stepIsNull(int Height, int Width) {
         if(FXMLController.ground[Height][Width] == 0) {
@@ -109,12 +109,15 @@ public class Play
         if(checkGoodness(goodness))
             FXMLController.getInstance().playwin();
     }
+
+    /**
+     * @param goodness a már célban levő bábuk száma
+     * @return true-val, hogyha nyert
+     */
     public boolean checkGoodness(int goodness) {
         if(goodness == 6)
             return true;
         else
             return false;
     }
-
-
 }

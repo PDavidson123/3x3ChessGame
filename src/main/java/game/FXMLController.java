@@ -79,6 +79,7 @@ public class FXMLController {
     private static Image blackwhite;
     private static Image black;
     private static Image white;
+
     private Play play = new Play();
 
     public static int StepCounter=0;
@@ -95,14 +96,10 @@ public class FXMLController {
     }
     @FXML
     private void B_gamebeginClick(ActionEvent event) {
-        preppane.setVisible(false);
-        gamepane.setVisible(true);
-
-        gamer.setName(gamer1.getText());
-
-        conn.addGamer(gamer);
-
-        gamebegin();
+        if(gamer1.getText() == "")
+            gamer1.setText("Ki kell tölteni.");
+        else
+            gamebegin();
     }
     @FXML
     private void winButtonClick(ActionEvent event) {
@@ -116,7 +113,7 @@ public class FXMLController {
         start.setVisible(false);
         leaderboardPane.setVisible(true);
 
-        logger.info("Leaderboard lekérése.");
+        logger.error("Leaderboard lekérése.");
 
         ObservableList<Gamer> top = FXCollections.observableList(conn.getLeaderboard());
 
@@ -180,7 +177,6 @@ public class FXMLController {
         black = new Image(getClass().getResource("black.png").toString());
         white = new Image(getClass().getResource("white.png").toString());
 
-        stepLabel.setText(StepCounter + " . lépés");
         paint();
     }
 
@@ -188,6 +184,16 @@ public class FXMLController {
     {
         player1=gamer1.getText();
         nameLabel.setText(player1);
+
+        preppane.setVisible(false);
+        gamepane.setVisible(true);
+
+        gamer.setName(gamer1.getText());
+
+        conn.addGamer(gamer);
+
+        gamer1.setText("");
+        logger.info(player1 + " a játékos neve.");
     }
 
     public static FXMLController getInstance()
@@ -251,13 +257,12 @@ public class FXMLController {
             }
     }
 
-    public void setMessageOutText(String Text)
-    {
+    public void setMessageOutText(String Text) {
         messageout.setText(Text);
     }
-    public void playwin()
-    {
-        logger.info(FXMLController.player1 + " megnyerte a játékot " + FXMLController.StepCounter + " lépéssel.");
+
+    public void playwin() {
+        logger.info(player1 + " megnyerte a játékot " + StepCounter + " lépéssel.");
         messageout.setText("Megnyerted a játékot.");
         winButton.setVisible(true);
     }
