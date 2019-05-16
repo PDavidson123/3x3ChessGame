@@ -132,23 +132,23 @@ public class FXMLController {
     }
 
     @FXML
-    private void b00Click() { setMessageOutText(play.step(0,0)); }
+    private void b00Click() { play.step(0,0); }
     @FXML
-    private void b01Click() { setMessageOutText(play.step(0,1)); }
+    private void b01Click() { play.step(0,1); }
     @FXML
-    private void b02Click() { setMessageOutText(play.step(0,2)); }
+    private void b02Click() { play.step(0,2); }
     @FXML
-    private void b10Click() { setMessageOutText(play.step(1,0)); }
+    private void b10Click() { play.step(1,0); }
     @FXML
-    private void b11Click() { setMessageOutText(play.step(1,1)); }
+    private void b11Click() { play.step(1,1); }
     @FXML
-    private void b12Click() { setMessageOutText(play.step(1,2)); }
+    private void b12Click() { play.step(1,2); }
     @FXML
-    private void b20Click() { setMessageOutText(play.step(2,0)); }
+    private void b20Click() { play.step(2,0); }
     @FXML
-    private void b21Click() { setMessageOutText(play.step(2,1)); }
+    private void b21Click() { play.step(2,1); }
     @FXML
-    private void b22Click() { setMessageOutText(play.step(2,2)); }
+    private void b22Click() { play.step(2,2); }
 
     public void initialize() {
 

@@ -50,7 +50,7 @@ public class DBTools {
     }
 
     /**
-     *
+     * A függvény lekéri a játékosokat az adatbázisból, és pontszám alapján csökkenő sorrendbe rendezi.
      * @return
      */
     public List<Gamer> getLeaderboard() {

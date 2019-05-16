@@ -16,9 +16,8 @@ public class Play
      * A megtenni kívánt lépéseket ellenőrzi, teszi meg.
      * @param Height
      * @param Width
-     * @return Visszatér a hibaüzenettel.
      */
-    public String step(int Height,int Width)
+    public void step(int Height,int Width)
     {
         if(IsFirstClick) {
             stepIsNull(Height,Width);
@@ -26,12 +25,12 @@ public class Play
         else {
             if (Height==FirstClickNumber[0] && Width==FirstClickNumber[1]) {
                 logger.warn("Ugyan oda nem léphet.");
-                return ("Ugyan oda nem léphetsz.");
+                FXMLController.getInstance().setMessageOutText("Ugyan oda nem léphetsz.");
             }
 
             else {
                 if(FXMLController.ground[Height][Width]==0 && FXMLController.ground[FirstClickNumber[0]][FirstClickNumber[1]]==1 && ColorSelection) {
-                    if(whereCanStepWhite(Height,Width)) {
+                    if(FXMLController.ground[Height][Width]==0 && (FirstClickNumber[0]+1 == Height && FirstClickNumber[1]+2 == Width) || (FirstClickNumber[0]+1 == Height && FirstClickNumber[1]-2 == Width) || (FirstClickNumber[0]+2 == Height && FirstClickNumber[1]+1 == Width) || (FirstClickNumber[0]+2 == Height && FirstClickNumber[1]-1 == Width)) {
                         FXMLController.ground[FirstClickNumber[0]][FirstClickNumber[1]] =0;
                         FXMLController.ground[Height][Width]=1;
 
@@ -41,11 +40,11 @@ public class Play
                         FXMLController.StepCounter++;
                         logger.info(FirstClickNumber[0] + "," + FirstClickNumber[1] + "-ről " + Height + "," + Width + "-re lépett.");
                         checkwin();
-                        return (FXMLController.StepCounter + ". lépés");
+                        FXMLController.getInstance().setMessageOutText(FXMLController.StepCounter + ". lépés");
                     }
                 }
                 else if(FXMLController.ground[Height][Width]==0 && FXMLController.ground[FirstClickNumber[0]][FirstClickNumber[1]]==2 && !ColorSelection) {
-                    if(whereCanStepBlack(Height,Width)) {
+                    if(FXMLController.ground[Height][Width]==0 && (FirstClickNumber[0]-1 == Height && FirstClickNumber[1]-2 == Width) || (FirstClickNumber[0]-1 == Height && FirstClickNumber[1]+2 == Width) || (FirstClickNumber[0]-2 == Height && FirstClickNumber[1]-1 == Width) || (FirstClickNumber[0]-2 == Height && FirstClickNumber[1]+1 == Width)) {
                         FXMLController.ground[FirstClickNumber[0]][FirstClickNumber[1]] =0;
                         FXMLController.ground[Height][Width]=2;
 
@@ -55,40 +54,12 @@ public class Play
                         FXMLController.StepCounter++;
                         logger.info(FirstClickNumber[0] + "," + FirstClickNumber[1] + "-ről " + Height + "," + Width + "-re lépett.");
                         checkwin();
-                        return (FXMLController.StepCounter + ". lépés");
+                        FXMLController.getInstance().setMessageOutText(FXMLController.StepCounter + ". lépés");
                     }
                 }
             }
             logger.info( FXMLController.StepCounter + ". lépés.");
-
         }
-        return ("Jó lépés");
-    }
-
-    /**
-     * Visszatér egy boolean-el, hogy léphet-e oda, vagy nem.
-     * @param Height
-     * @param Width
-     * @return
-     */
-    public static boolean whereCanStepWhite(int Height, int Width) {
-        if(FXMLController.ground[Height][Width]==0 && (FirstClickNumber[0]+1 == Height && FirstClickNumber[1]+2 == Width) || (FirstClickNumber[0]+1 == Height && FirstClickNumber[1]-2 == Width) || (FirstClickNumber[0]+2 == Height && FirstClickNumber[1]+1 == Width) || (FirstClickNumber[0]+2 == Height && FirstClickNumber[1]-1 == Width))
-            return true;
-        else
-            return false;
-    }
-    /**
-     * Visszatér egy boolean-el, hogy léphet-e oda, vagy nem.
-     * @param Height
-     * @param Width
-     * @return
-     */
-    public static boolean whereCanStepBlack(int Height, int Width)
-    {
-        if (FXMLController.ground[Height][Width]==0 && (FirstClickNumber[0]-1 == Height && FirstClickNumber[1]-2 == Width) || (FirstClickNumber[0]-1 == Height && FirstClickNumber[1]+2 == Width) || (FirstClickNumber[0]-2 == Height && FirstClickNumber[1]-1 == Width) || (FirstClickNumber[0]-2 == Height && FirstClickNumber[1]+1 == Width))
-            return true;
-        else
-            return false;
     }
 
     /**
@@ -135,8 +106,14 @@ public class Play
                 goodness++;
         }
         logger.info(goodness + " bábu van a helyén.");
-        if(goodness==6)
+        if(checkGoodness(goodness))
             FXMLController.getInstance().playwin();
+    }
+    public boolean checkGoodness(int goodness) {
+        if(goodness == 6)
+            return true;
+        else
+            return false;
     }
 
 
