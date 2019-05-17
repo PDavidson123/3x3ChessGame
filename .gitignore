@@ -101,4 +101,9 @@ buildNumber.properties
 .mvn/timing.properties
 .mvn/wrapper/maven-wrapper.jar
 
+nb-configuration.xml
+nbactions.xml
+
+*.sql
+
 # End of https://www.gitignore.io/api/maven,intellij+all
