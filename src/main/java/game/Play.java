@@ -8,19 +8,23 @@ public class Play
 
     private static Logger logger = LoggerFactory.getLogger(Play.class);
 
-    public static boolean IsFirstClick = true;
+    public static boolean FirstClick = true;
     private static boolean ColorSelection = true;
-    private static int[] FirstClickNumber = new int[2];
+    public static int[] FirstClickNumberO = new int[2];
+
+    public static int[][] groundO = new int[3][3];
+
+    public static int StepCounter=0;
 
     /**
      * A megtenni kívánt lépéseket ellenőrzi, teszi meg.
      * @param Height a választott bábu Y koordinátája
      * @param Width a választott bábu X koordinátája
      */
-    public void step(int Height,int Width)
+    public void step(int Height,int Width, int[][] ground,int[] FirstClickNumber, boolean IsFirstClick)
     {
         if(IsFirstClick) {
-            stepIsNull(Height,Width);
+            stepIsNull(Height,Width, ground);
         }
         else {
             if (Height==FirstClickNumber[0] && Width==FirstClickNumber[1]) {
@@ -29,54 +33,67 @@ public class Play
             }
 
             else {
-                if(FXMLController.ground[Height][Width]==0 && FXMLController.ground[FirstClickNumber[0]][FirstClickNumber[1]]==1 && ColorSelection) {
-                    if(FXMLController.ground[Height][Width]==0 && (FirstClickNumber[0]+1 == Height && FirstClickNumber[1]+2 == Width) || (FirstClickNumber[0]+1 == Height && FirstClickNumber[1]-2 == Width) || (FirstClickNumber[0]+2 == Height && FirstClickNumber[1]+1 == Width) || (FirstClickNumber[0]+2 == Height && FirstClickNumber[1]-1 == Width)) {
-                        FXMLController.ground[FirstClickNumber[0]][FirstClickNumber[1]] =0;
-                        FXMLController.ground[Height][Width]=1;
+                if(ground[Height][Width]==0 && ground[FirstClickNumber[0]][FirstClickNumber[1]]==1 && ColorSelection) {
+                    if(canWhiteMove(Height,Width,ground, FirstClickNumber)) {
+                        groundO[FirstClickNumber[0]][FirstClickNumber[1]] =0;
+                        groundO[Height][Width]=1;
 
-                        FXMLController.paint();
-                        IsFirstClick=true;
+                        FirstClick=true;
                         ColorSelection=false;
-                        FXMLController.StepCounter++;
+                        StepCounter++;
                         logger.info(FirstClickNumber[0] + "," + FirstClickNumber[1] + "-ről " + Height + "," + Width + "-re lépett.");
                         checkwin();
-                        FXMLController.getInstance().setMessageOutText(FXMLController.StepCounter + ". lépés");
+                        FXMLController.getInstance().setMessageOutText(StepCounter + ". lépés");
                     }
                 }
-                else if(FXMLController.ground[Height][Width]==0 && FXMLController.ground[FirstClickNumber[0]][FirstClickNumber[1]]==2 && !ColorSelection) {
-                    if(FXMLController.ground[Height][Width]==0 && (FirstClickNumber[0]-1 == Height && FirstClickNumber[1]-2 == Width) || (FirstClickNumber[0]-1 == Height && FirstClickNumber[1]+2 == Width) || (FirstClickNumber[0]-2 == Height && FirstClickNumber[1]-1 == Width) || (FirstClickNumber[0]-2 == Height && FirstClickNumber[1]+1 == Width)) {
-                        FXMLController.ground[FirstClickNumber[0]][FirstClickNumber[1]] =0;
-                        FXMLController.ground[Height][Width]=2;
+                else if(ground[Height][Width]==0 && ground[FirstClickNumber[0]][FirstClickNumber[1]]==2 && !ColorSelection) {
+                    if(canBlackMove(Height,Width,ground, FirstClickNumber)) {
+                        groundO[FirstClickNumber[0]][FirstClickNumber[1]] =0;
+                        groundO[Height][Width]=2;
 
-                        FXMLController.paint();
-                        IsFirstClick=true;
+                        FirstClick=true;
                         ColorSelection=true;
-                        FXMLController.StepCounter++;
+                        StepCounter++;
                         logger.info(FirstClickNumber[0] + "," + FirstClickNumber[1] + "-ről " + Height + "," + Width + "-re lépett.");
                         checkwin();
-                        FXMLController.getInstance().setMessageOutText(FXMLController.StepCounter + ". lépés");
+                        FXMLController.getInstance().setMessageOutText(StepCounter + ". lépés");
                     }
                 }
             }
-            logger.info( FXMLController.StepCounter + ". lépés.");
+            logger.info(StepCounter + ". lépés.");
         }
     }
 
     /**
-     * Eldönti, hogy a játékos a jó színt választotta-e.
+     * Azt állapítja meg, hogy a fehér hova léphet.
      * @param Height a választott bábu Y koordinátája
      * @param Width a választott bábu X koordinátája
+     * @param ground a játéktér mátrixa
+     * @param FirstClickNumber 1. lépés helye
+     * @return
      */
-    public static void stepColorSelect(int Height,int Width) {
-        if(ColorSelection && FXMLController.ground[Height][Width]==2 || !ColorSelection && FXMLController.ground[Height][Width]==1) {
-            logger.warn("Rossz szín választva.");
-        }
-        else if(ColorSelection && FXMLController.ground[Height][Width]==1 || !ColorSelection && FXMLController.ground[Height][Width]==2) {
-            FirstClickNumber[0] = Height;
-            FirstClickNumber[1] = Width;
-            IsFirstClick = false;
-            logger.info(FirstClickNumber[0] + "," + FirstClickNumber[1] + " kiválasztva.");
-        }
+    public boolean canWhiteMove(int Height, int Width, int[][] ground, int[] FirstClickNumber)
+    {
+        if(ground[Height][Width]==0 && (FirstClickNumber[0]+1 == Height && FirstClickNumber[1]+2 == Width) || (FirstClickNumber[0]+1 == Height && FirstClickNumber[1]-2 == Width) || (FirstClickNumber[0]+2 == Height && FirstClickNumber[1]+1 == Width) || (FirstClickNumber[0]+2 == Height && FirstClickNumber[1]-1 == Width))
+            return true;
+        else
+            return false;
+    }
+
+    /**
+     * Azt állapítja meg, hogy a fekete hova léphet.
+     * @param Height a választott bábu Y koordinátája
+     * @param Width a választott bábu X koordinátája
+     * @param ground a játéktér mátrixa
+     * @param FirstClickNumber 1. lépés helye
+     * @return
+     */
+    public boolean canBlackMove(int Height, int Width, int[][] ground, int[] FirstClickNumber)
+    {
+        if(ground[Height][Width]==0 && (FirstClickNumber[0]-1 == Height && FirstClickNumber[1]-2 == Width) || (FirstClickNumber[0]-1 == Height && FirstClickNumber[1]+2 == Width) || (FirstClickNumber[0]-2 == Height && FirstClickNumber[1]-1 == Width) || (FirstClickNumber[0]-2 == Height && FirstClickNumber[1]+1 == Width))
+            return true;
+        else
+            return false;
     }
 
     /**
@@ -84,12 +101,29 @@ public class Play
      * @param Height a választott mező Y koordinátája
      * @param Width A választott mező X koordinátája
      */
-    public static void stepIsNull(int Height, int Width) {
-        if(FXMLController.ground[Height][Width] == 0) {
+    public static void stepIsNull(int Height, int Width, int[][] ground) {
+        if(ground[Height][Width] == 0) {
             logger.warn("A semmivel nem lehet lépni.");
         }
         else
-            stepColorSelect(Height,Width);
+            stepColorSelect(Height,Width, ground);
+    }
+
+    /**
+     * Eldönti, hogy a játékos a jó színt választotta-e.
+     * @param Height a választott bábu Y koordinátája
+     * @param Width a választott bábu X koordinátája
+     */
+    public static void stepColorSelect(int Height,int Width, int[][] ground) {
+        if(ColorSelection && ground[Height][Width]==2 || !ColorSelection && ground[Height][Width]==1) {
+            logger.warn("Rossz szín választva.");
+        }
+        else if(ColorSelection && ground[Height][Width]==1 || !ColorSelection && ground[Height][Width]==2) {
+            FirstClickNumberO[0] = Height;
+            FirstClickNumberO[1] = Width;
+            FirstClick = false;
+            logger.info(FirstClickNumberO[0] + "," + FirstClickNumberO[1] + " kiválasztva.");
+        }
     }
 
     /**
@@ -100,9 +134,9 @@ public class Play
         int goodness=0;
         for (int i=0;i<3;i++)
         {
-            if(FXMLController.ground[0][i]==2)
+            if(groundO[0][i]==2)
                 goodness++;
-            if(FXMLController.ground[2][i]==1)
+            if(groundO[2][i]==1)
                 goodness++;
         }
         logger.info(goodness + " bábu van a helyén.");

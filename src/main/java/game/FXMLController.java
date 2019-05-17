@@ -21,6 +21,8 @@ import javafx.scene.control.TableView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static game.Play.*;
+
 public class FXMLController {
 
     @FXML
@@ -69,7 +71,7 @@ public class FXMLController {
     private static FXMLController instance;
 
     public static ImageView[][] btns = new ImageView[3][3];
-    public static byte[][] ground = new byte[3][3];
+
     private static String player1;
     private static Image blackblack;
     private static Image whiteblack;
@@ -79,8 +81,6 @@ public class FXMLController {
     private static Image white;
 
     private Play play = new Play();
-
-    public static int StepCounter=0;
 
     private static Logger logger = LoggerFactory.getLogger(FXMLController.class);
 
@@ -104,7 +104,7 @@ public class FXMLController {
         startPane.setVisible(true);
         gamePane.setVisible(false);
         conn.updateGamer(gamer);
-        resetGame();
+        resetGame(groundO);
     }
     @FXML
     private void leadbShow(ActionEvent event) {
@@ -127,23 +127,23 @@ public class FXMLController {
     }
 
     @FXML
-    private void b00Click() { play.step(0,0); }
+    private void b00Click() { play.step(0,0, groundO, FirstClickNumberO, FirstClick); paint(); }
     @FXML
-    private void b01Click() { play.step(0,1); }
+    private void b01Click() { play.step(0,1, groundO, FirstClickNumberO,FirstClick); paint(); }
     @FXML
-    private void b02Click() { play.step(0,2); }
+    private void b02Click() { play.step(0,2, groundO, FirstClickNumberO,FirstClick); paint(); }
     @FXML
-    private void b10Click() { play.step(1,0); }
+    private void b10Click() { play.step(1,0, groundO, FirstClickNumberO,FirstClick); paint(); }
     @FXML
-    private void b11Click() { play.step(1,1); }
+    private void b11Click() { play.step(1,1, groundO, FirstClickNumberO,FirstClick); paint(); }
     @FXML
-    private void b12Click() { play.step(1,2); }
+    private void b12Click() { play.step(1,2, groundO, FirstClickNumberO,FirstClick); paint(); }
     @FXML
-    private void b20Click() { play.step(2,0); }
+    private void b20Click() { play.step(2,0, groundO, FirstClickNumberO,FirstClick); paint(); }
     @FXML
-    private void b21Click() { play.step(2,1); }
+    private void b21Click() { play.step(2,1, groundO, FirstClickNumberO,FirstClick); paint(); }
     @FXML
-    private void b22Click() { play.step(2,2); }
+    private void b22Click() { play.step(2,2, groundO, FirstClickNumberO,FirstClick); paint(); }
 
     public void initialize() {
 
@@ -166,7 +166,7 @@ public class FXMLController {
         btns[2][1] = b21;
         btns[2][2] = b22;
 
-        resetGame();
+        resetGame(groundO);
 
         blackblack = new Image(getClass().getResource("blackblack.png").toString());
         whiteblack = new Image(getClass().getResource("whiteblack.png").toString());
@@ -202,7 +202,7 @@ public class FXMLController {
     /**
      * Játék alapértékeinek beállítása (játéktér tömb feltöltése, lépésszámláló resetelése).
      */
-    public void resetGame()
+    public void resetGame(int[][] ground)
     {
         for(byte i=0;i<3;i++)
             ground[0][i] = 1;
@@ -213,7 +213,7 @@ public class FXMLController {
 
         winButton.setVisible(false);
         StepCounter = 0;
-        play.IsFirstClick = true;
+        FirstClick = true;
         paint();
     }
 
@@ -227,7 +227,7 @@ public class FXMLController {
             {
                 if (i==0 && j==0 || i== 0 && j==2 || i==1 && j==1 || i==2 && j==0 || i==2 && j==2 /*i == j || abs(i + j) == 2*/)
                 {
-                    switch (ground[i][j])
+                    switch (groundO[i][j])
                     {
                         case 0:
                             btns[i][j].setImage(black);
@@ -241,7 +241,7 @@ public class FXMLController {
                 }
                 else
                 {
-                    switch (ground[i][j]) {
+                    switch (groundO[i][j]) {
                         case 0:
                             btns[i][j].setImage(white);
                             break;
